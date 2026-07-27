@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0b1220">
+  <title>CHESAKL TOOLS</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><div class="brand-mark">CT</div><div><div class="brand-name">CHESAKL TOOLS</div><div class="brand-sub">NFC + QR TOOL CONTROL</div></div></div>
+  <button id="installBtn" class="ghost small hidden">Установить</button>
+</header>
+<main class="app-shell">
+  <section class="hero"><div><span class="eyebrow">СИСТЕМА УЧЁТА ИНСТРУМЕНТА</span><h1>Быстрая выдача.<br>Понятный журнал.</h1><p>Считайте NFC-метку владельца, затем сканируйте QR-коды инструментов прямо внутри сайта.</p></div></section>
+  <section class="active-panel card">
+    <div class="section-head"><div><div class="section-kicker">ТЕКУЩИЙ ВЛАДЕЛЕЦ</div><h2 id="activeOwnerName">Владелец не выбран</h2><p id="activeOwnerMeta">Сначала считайте NFC-метку сотрудника</p></div><div id="ownerAvatar" class="owner-avatar muted">?</div></div>
+    <div class="main-actions"><button id="scanOwnerBtn" class="btn primary"><span class="btn-icon">◉</span>Считать NFC владельца</button><button id="scanToolBtn" class="btn accent" disabled><span class="btn-icon">▦</span>Сканировать QR инструмента</button></div>
+    <div id="statusBox" class="status-box info"><div id="statusIcon" class="status-icon">i</div><div><strong id="statusTitle">Ожидание владельца</strong><span id="statusText">Нажмите «Считать NFC владельца»</span></div></div>
+  </section>
+  <nav class="tabs"><button class="tab active" data-tab="journal">Журнал</button><button class="tab" data-tab="owners">Владельцы</button><button class="tab" data-tab="tools">Инструменты</button><button class="tab" data-tab="history">История</button></nav>
+  <section id="journalTab" class="tab-page active"><div class="section-title-row"><div><span class="section-kicker">АКТИВНЫЕ ЖУРНАЛЫ</span><h2>Выданный инструмент</h2></div><span id="activeCount" class="counter">0</span></div><div id="journalsList" class="stack empty-state"></div></section>
+  <section id="ownersTab" class="tab-page"><div class="section-title-row"><div><span class="section-kicker">НАСТРОЙКА NFC</span><h2>Владельцы</h2></div><button id="addOwnerBtn" class="btn compact">+ Добавить</button></div><div id="ownersList" class="stack"></div></section>
+  <section id="toolsTab" class="tab-page"><div class="section-title-row"><div><span class="section-kicker">НАСТРОЙКА QR</span><h2>Инструменты</h2></div><button id="addToolBtn" class="btn compact">+ Добавить</button></div><div class="search-wrap"><input id="toolSearch" type="search" placeholder="Поиск по названию или коду"></div><div id="toolsList" class="stack"></div></section>
+  <section id="historyTab" class="tab-page"><div class="section-title-row"><div><span class="section-kicker">ВСЕ ОПЕРАЦИИ</span><h2>История</h2></div><button id="clearHistoryBtn" class="ghost danger small">Очистить</button></div><div id="historyList" class="stack"></div></section>
+</main>
+<div id="modalBackdrop" class="modal-backdrop hidden"></div>
+<section id="ownerModal" class="modal hidden"><div class="modal-handle"></div><div class="modal-head"><div><span class="section-kicker">ПРИВЯЗКА NFC</span><h2>Новый владелец</h2></div><button class="icon-btn" data-close-modal>×</button></div><label class="field"><span>Имя владельца</span><input id="ownerNameInput" placeholder="Например: Сергей Иванов"></label><div class="bind-box"><span class="bind-label">NFC-метка владельца</span><strong id="ownerNfcValue">Код ещё не создан</strong><button id="writeOwnerNfcBtn" class="btn primary">Создать код и записать метку</button><button id="bindOwnerNfcBtn" class="btn secondary">Считать уже записанную метку</button><small class="bind-note">Сайт создаст уникальный код вида EMP-001 и запишет его на NFC-метку.</small></div><button id="saveOwnerBtn" class="btn primary full">Сохранить владельца</button></section>
+<section id="toolModal" class="modal hidden"><div class="modal-handle"></div><div class="modal-head"><div><span class="section-kicker">ПРИВЯЗКА QR</span><h2>Новый инструмент</h2></div><button class="icon-btn" data-close-modal>×</button></div><label class="field"><span>Название инструмента</span><input id="toolNameInput" placeholder="Например: Болгарка Makita №1"></label><div class="bind-box"><span class="bind-label">QR-код</span><strong id="toolQrValue">Не считан</strong><button id="bindToolQrBtn" class="btn secondary">Сканировать QR</button></div><button id="saveToolBtn" class="btn primary full">Сохранить инструмент</button></section>
+<section id="qrModal" class="modal qr-modal hidden"><div class="modal-handle"></div><div class="modal-head"><div><span class="section-kicker">КАМЕРА</span><h2 id="qrModalTitle">Сканирование QR</h2></div><button id="closeQrBtn" class="icon-btn">×</button></div><div class="camera-wrap"><video id="qrVideo" playsinline muted></video><div class="scan-frame"></div><div class="scan-line"></div></div><p class="camera-help">Наведите камеру на QR-код. Сканирование произойдёт автоматически.</p></section>
+<div id="toast" class="toast hidden"></div>
+<script src="app.js"></script>
+</body></html>
